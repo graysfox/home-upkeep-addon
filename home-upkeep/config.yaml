@@ -6,7 +6,7 @@ image: "ghcr.io/tonyroberts/home-upkeep-addon-{arch}"
 url: "https://github.com/tonyroberts/home-upkeep-addon"
 init: false
 ingress: true
-host_network: false
+panel_admin: false
 panel_icon: "mdi:duck"
 map:
   - type: data
@@ -18,6 +18,8 @@ arch:
 options:
   log_level: info
   port: 8125
+  panel_admin: true
 schema:
   log_level: list(trace|debug|info|notice|warning|error|fatal)
   port: int
+  panel_admin: bool?
