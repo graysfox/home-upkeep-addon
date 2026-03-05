@@ -9,14 +9,6 @@ export const localDateInputToISO = (dateInput?: string): string | null =>
     return dt.isValid ? dt.toISO(): null;
 };
 
-export const isoToDateInput = (iso?: string): string =>
-{
-    if (!iso)
-        return '';
-    const dt = DateTime.fromISO(iso).setZone('local');
-    return dt.isValid ? dt.toISODate() : '';
-};
-
 export const formatISOToLocal = (iso?: string): string =>
 {
     if (!iso)
