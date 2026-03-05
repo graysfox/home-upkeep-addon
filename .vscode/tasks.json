@@ -45,6 +45,23 @@
         "panel": "new"
       },
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "home-upkeep/frontend",
+      "label": "npm: dev - home-upkeep/frontend",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "VITE",
+          "endsPattern": "Local:"
+        }
+      }
     }
   ],
   "inputs": [
