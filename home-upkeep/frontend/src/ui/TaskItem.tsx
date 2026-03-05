@@ -2,6 +2,7 @@ import React from 'react';
 import { Task } from '../api/client';
 import { Icon } from '@mdi/react';
 import { mdiSleep, mdiPencil, mdiTrashCanOutline } from '@mdi/js';
+import { formatISOToLocal } from './dateUtils';
 
 interface TaskItemProps {
   task: Task;
@@ -36,7 +37,7 @@ export function TaskItem({ task, onToggle, onDelete, onEdit, onSnooze }: TaskIte
                 <div className="mt-1 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                 {task.due_date && (
                   <span className="badge-orange">
-                    Due {new Date(task.due_date).toLocaleDateString()}
+                    Due {formatISOToLocal(task.due_date)}
                   </span>
                 )}
                 {task.completed_at && (
