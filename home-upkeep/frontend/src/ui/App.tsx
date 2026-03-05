@@ -349,35 +349,31 @@ export function App() {
             )}
 
             {selectedListId == null ? null : (() => {
-              const today = new Date();
-              today.setHours(0, 0, 0, 0);
               const isDueOrOverdue = (t: Task) => {
                 if (t.completed) return false;
                 if (!t.due_date) return true; // include tasks with no due date
-                const d = new Date(t.due_date);
-                d.setHours(0, 0, 0, 0);
-                return d.getTime() <= today.getTime();
+                return (new Date(t.due_date) <= new Date());
               };
-              const startOfDay = (d: Date) => {
-                const c = new Date(d);
-                c.setHours(0, 0, 0, 0);
-                return c.getTime();
-              };
+              const isUpcoming = (t: Task) => {
+                if (t.completed) return false;
+                if (!t.due_date) return false;
+                return (new Date(t.due_date) > new Date());
+              }
               const due = tasks
                 .filter(isDueOrOverdue)
                 .sort((a, b) => {
-                  const ad = a.due_date ? startOfDay(new Date(a.due_date)) : Infinity;
-                  const bd = b.due_date ? startOfDay(new Date(b.due_date)) : Infinity;
+                  const ad = a.due_date ? new Date(a.due_date).getTime() : Infinity;
+                  const bd = b.due_date ? new Date(b.due_date).getTime() : Infinity;
                   if (ad !== bd) return ad - bd; // by due date (day) ascending; no-due last
                   const ac = new Date(a.created_at).getTime();
                   const bc = new Date(b.created_at).getTime();
                   return ac - bc; // tie-break by created time ascending
                 });
               const upcoming = tasks
-                .filter((t) => !t.completed && t.due_date && startOfDay(new Date(t.due_date)) > today.getTime())
+                .filter(isUpcoming)
                 .sort((a, b) => {
-                  const ad = startOfDay(new Date(a.due_date!));
-                  const bd = startOfDay(new Date(b.due_date!));
+                  const ad = new Date(a.due_date!).getTime();
+                  const bd = new Date(b.due_date!).getTime();
                   if (ad !== bd) return ad - bd;
                   const ac = new Date(a.created_at).getTime();
                   const bc = new Date(b.created_at).getTime();

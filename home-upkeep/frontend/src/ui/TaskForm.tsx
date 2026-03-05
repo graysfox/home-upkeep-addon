@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TaskCreate } from '../api/client';
+import { localDateInputToISO } from './dateUtils';
 
 interface TaskFormProps {
   onSubmit: (data: TaskCreate) => Promise<void>;
@@ -21,7 +22,7 @@ export function TaskForm({ onSubmit, listId, onCancel }: TaskFormProps) {
           list_id: listId,
           title: title.trim(),
           description: description.trim() || undefined,
-          due_date: dueDate ? new Date(dueDate).toISOString() : undefined,
+          due_date: dueDate ? localDateInputToISO(dueDate) : undefined,
           reschedule_period: reschedPeriod || undefined,
         };
         if (!data.title) return;
